@@ -4,7 +4,7 @@ const Welcom = () => {
     return (
         <div className='quiz-bg'>
             <div className='container'>
-                Error Page
+                Welcon for you in the game
             </div>
         </div>
     );
