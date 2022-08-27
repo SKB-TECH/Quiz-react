@@ -7,6 +7,7 @@ import Welcom from "../Welcom";
 import Login from "../Login";
 import SignUp from "../SignUp";
 import Error from "../Errors";
+import ForgetPassword from "../ForgetPassword";
 
 const App=()=>{
   return (
@@ -17,6 +18,7 @@ const App=()=>{
         <Route path="/Login" element={<Login/>}/>
         <Route path="/SignUp" element={<SignUp/>}/>
         <Route path="/Welcom" element={<Welcom/>}/>
+        <Route path="/forgetpassword" element={<ForgetPassword/>}/>
         <Route path="*" element={<Error/>}/>
       </Routes>
       <Footer/>
