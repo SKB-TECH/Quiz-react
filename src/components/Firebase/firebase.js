@@ -15,6 +15,7 @@ class Firebase {
   constructor() {
     app.initializeApp(config);
     this.auth = app.auth();
+    
   }
 
   //Inscription vers la plat-form
@@ -40,6 +41,7 @@ class Firebase {
     })
   };
 
+  
   //Pour la deconnexion a la plat-form
   SignOut = () => this.auth.signOut();
 }
