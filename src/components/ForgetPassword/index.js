@@ -5,14 +5,31 @@ import { useNavigate } from 'react-router-dom';
 
 const ForgetPassword = () => {
     const [email,setEmail] = useState('')
+    const [success,setSuccess]=useState("")
+    const [faild,setFaild]=useState('')
+
     const firebase=useContext(FirebaseContext)
     const navigate=useNavigate()
     const disabled= email===''
 
+    const reussi=()=>{
+        setFaild(null)
+        setSuccess("Veillez consulter votre adresse email pour initialiser le mot de passe")
+    }
+
+    const echec=()=>{
+        setFaild(faild)
+        setSuccess("")
+    }
+
 
     const handlsubmit=(e)=>{
         e.preventDefault()
-        firebase.passwordReset(email);
+        firebase.passwordReset(email,reussi,echec);
+
+        setInterval(()=>{
+            navigate('/login')
+        },5000)
     }
 
     return (
@@ -22,6 +39,16 @@ const ForgetPassword = () => {
             </div>
             <div className='formBoxRight'>
                 <div className='formContent'>
+                {
+                    success && <span style={
+                        {
+                            border:"1px solid green",
+                            background:"green",
+                            color:"#ffffff"
+                        }
+                    }>{success}</span>
+                }
+
                 <h2>Initialisation mot de passe</h2>
                     <form onSubmit={handlsubmit}>
                         < div className='inputBox'>

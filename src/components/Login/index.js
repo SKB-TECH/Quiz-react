@@ -70,7 +70,8 @@ const Login = (props) => {
                             }
                         </form>
                         <div className='linkContainer'>
-                            <Link className='simpleLink' to="/Signup" style={{fontSize:"18px"}}>Cree un nouveau compte</Link>
+                            <Link className='simpleLink' to="/Signup" style={{fontSize:"18px"}}>Cree un nouveau compte</Link> <br />
+                            <Link className='simpleLink' to="/forgetpassword" style={{fontSize:"18px"}}>Mot de passe Oubier</Link>
                         </div>
                     </div>
                 </div>
