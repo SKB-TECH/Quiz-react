@@ -39,8 +39,8 @@ const invalidation=()=>{
 //fonction pour enregistrer dans la base des donnees
 const handlsubmit=(e)=>{
     e.preventDefault()
-    const {email,password}=logineData;
-    firebase.SignupUser(email,password,verication,invalidation)
+    const {email,password,pseudo}=logineData;
+    firebase.SignupUser(email,password,pseudo,verication,invalidation)
 }
 
 const errorMsg= error !=='' && <span>{error.message}</span>

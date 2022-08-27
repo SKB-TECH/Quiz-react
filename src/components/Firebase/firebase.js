@@ -1,6 +1,6 @@
 import app from "firebase/compat/app";
 import "firebase/compat/auth";
-
+import 'firebase/compat/firestore'
 
 const config = {
   apiKey: "AIzaSyCqhlOvOde5uTrlf26iPbSSPviX05q5_No",
@@ -15,13 +15,22 @@ class Firebase {
   constructor() {
     app.initializeApp(config);
     this.auth = app.auth();
+    this.db=app.firestore();
   }
 
+  //Stockage dans la base des donnees
+  users=(uid)=>this.db.doc(`users/${uid}`)
   //Inscription vers la plat-form
-  SignupUser = (email, password, verification, invalidation) => {
+  SignupUser = (email, password, pseudo,verification, invalidation) => {
     this.auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((e) => {
+      .createUserWithEmailAndPassword(email,password,pseudo)
+      .then((authUser)=>{
+          this.users(authUser.user.uid).set(
+            pseudo,
+            email
+          )
+      })
+      .then(()=> {
         verification();
       })
       .catch((error) => {
@@ -55,6 +64,9 @@ class Firebase {
       .catch((faild) => {
         echec(faild);
       });
+      
+    
 }
+
 
 export default Firebase;
