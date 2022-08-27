@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState,useContext} from 'react';
 import { FirebaseContext } from '../Firebase';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
 const data= {
@@ -10,11 +12,13 @@ const data= {
     confirme:""
 }
 
-const context=useContext(FirebaseContext)
-
-
+//creation du context 
+const firebase=useContext(FirebaseContext)
+const [error,seterror]= useState("")
+const navigate=useNavigate()
 const [logineData,setloginData]= useState(data)
 const {pseudo,email,password,confirme}=logineData
+
 const btn= pseudo ===''|| email==='' || password==='' || password !==confirme ?
 <button disabled>Inscription</button>:<button>Inscription</button>
 
@@ -22,18 +26,34 @@ const handlChange=(e)=>{
     setloginData({...logineData,[e.target.id]:e.target.value})
 }
 
+const verication =()=>{
+    setloginData({...data})
+    navigate("/Welcom");
+}
+
+const invalidation=()=>{
+    seterror(error)
+    setloginData({...data})
+}
+
+//fonction pour enregistrer dans la base des donnees
+const handlsubmit=(e)=>{
+    e.preventDefault()
+    const {email,password}=logineData;
+    firebase.SignupUser(email,password,verication,invalidation)
+}
+
+const errorMsg= error !=='' && <span>{error.message}</span>
     return (
         <div className='signUpLoginBox'>
            <div className='slContainer'>
                 <div className='formBoxLeftSignup'>
-
                 </div>
-                {/* formulaire */}
-               
                 <div className='formBoxRight'>
                     <div className='formContent'>
+                    {errorMsg}
                     <h2>Inscription</h2>
-                        <form>
+                        <form onSubmit={handlsubmit}>
                             <div className='inputBox'>
                                 <input type="text" id='pseudo' onChange={handlChange} value={pseudo}  autoComplete='off' required />
                                 <label htmlFor="pseudo">Pseudo</label>
@@ -55,6 +75,9 @@ const handlChange=(e)=>{
                             </div>
                             {btn}
                         </form>
+                        <div className='linkContainer'>
+                            <Link className='simpleLink' to="/login" style={{fontSize:"18px"}}>Déja Inscrit ?   Connectez-vous</Link>
+                        </div>
                     </div>
                 </div>
            </div>

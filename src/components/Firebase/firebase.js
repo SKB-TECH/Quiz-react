@@ -1,6 +1,7 @@
 import app from "firebase/compat/app";
 import "firebase/compat/auth";
 
+
 const config = {
   apiKey: "AIzaSyCqhlOvOde5uTrlf26iPbSSPviX05q5_No",
   authDomain: "skb-quiz.firebaseapp.com",
@@ -17,14 +18,26 @@ class Firebase {
   }
 
   //Inscription vers la plat-form
-  SignupUser = (email, password) => {
-    this.auth.createUserWithEmailAndPassword(email, password);
+  SignupUser = (email, password,verification,invalidation) => {
+    this.auth.createUserWithEmailAndPassword(email, password)
+    .then(e=>{
+        verification()
+    })
+    .catch(error=>{
+      invalidation(error)
+    })
   };
 
   // Connexion a la plat-form
 
-  logineUser = (email, password) => {
-    this.auth.signInWithEmailAndPassword(email, password);
+  logineUser = (email, password,validation,invalidation) => {
+    this.auth.signInWithEmailAndPassword(email, password)
+    .then(e=>{
+      validation()
+    })
+    .catch(error=>{
+      invalidation(error)
+    })
   };
 
   //Pour la deconnexion a la plat-form
