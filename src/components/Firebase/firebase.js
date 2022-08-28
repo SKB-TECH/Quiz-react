@@ -18,21 +18,21 @@ class Firebase {
     this.db=app.firestore();
   }
 
-  //Stockage dans la base des donnees
-  users=(uid)=>this.db.doc(`users/${uid}`)
+
   //Inscription vers la plat-form
   SignupUser = (email, password, pseudo,verification, invalidation) => {
     this.auth
       .createUserWithEmailAndPassword(email,password,pseudo)
-      .then((authUser)=>{
-          this.users(authUser.user.uid).set(
-            pseudo,
-            email
+      .then((authUser)=> {
+          return this.user(authUser.user.uid).set(
+            pseudo,email
           )
       })
-      .then(()=> {
+
+      .then(()=>{
         verification();
       })
+       
       .catch((error) => {
         invalidation(error);
       });
@@ -41,8 +41,7 @@ class Firebase {
   // Connexion a la plat-form
 
   logineUser = (email, password, validation, invalidation) => {
-    this.auth
-      .signInWithEmailAndPassword(email, password)
+    this.auth.signInWithEmailAndPassword(email, password)
       .then((e) => {
         validation();
       })
@@ -65,7 +64,10 @@ class Firebase {
         echec(faild);
       });
       
+    //Stockage dans la base des donnees
     
+    user=(uid)=>this.db.doc(`users/${uid}`);
+
 }
 
 

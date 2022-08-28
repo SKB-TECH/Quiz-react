@@ -41,6 +41,7 @@ const handlsubmit=(e)=>{
     e.preventDefault()
     const {email,password,pseudo}=logineData;
     firebase.SignupUser(email,password,pseudo,verication,invalidation)
+    
 }
 
 const errorMsg= error !=='' && <span>{error.message}</span>
